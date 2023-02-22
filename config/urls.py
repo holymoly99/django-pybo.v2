@@ -21,5 +21,6 @@ urlpatterns = [
     path('', views.index),
     path('<int:question_id>/', views.detail),
     path('pybo/', include('pybo.urls', namespace="pybo")),
+
     
 ]

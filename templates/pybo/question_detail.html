@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-  <a href="{% url 'pybo:index' %}">목록보기</a>
 
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
@@ -8,6 +7,17 @@
 
   <div class="container my-3">
     <h2 class="border-bottom py-2">{{ question.subject}}</h2>
+    {% csrf_token %}
+    {% if form.errors %}
+      <div class="alert alert-danger" role="alert">
+        {% for field in form %}
+          {% if field.errors %}
+            <strong>{{ field.label }}</strong>
+            {{ field.errors }}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
     <div class="card my-3">
       <div class="card body">
         <div class="card text" style="white-space: pre-line;">{{question.content}}</div>
@@ -19,7 +29,8 @@
       </div>
     </div>
 
-    <h5 class="border-bottom my-3 py-2">{{ question.answer_set.count }}개의 답변이 있습니다.</h5>
+    <h5 class="border-bottom my-3 py-2">위 질문에 대한
+      {{ question.answer_set.count }}개의 답변이 있습니다.</h5>
     {% for answer in question.answer_set.all %}
       <div class="card my-3">
         <div class="card-body" style="white-space: pre-line;">{{answer.content}}</div>
@@ -29,15 +40,19 @@
           </div>
         </div>
       </div>
-    </div>
-  {% endfor %}
 
-  <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="my-3">
-    {% csrf_token %}
-    <div class="form-group">
-      <textarea name="content" id="content" class="form-control" rows="10"></textarea>
-    </div>
-    <input type="submit" value="답변등록" class="btn btn-primary">
-  </form>
-</div>
+    {% endfor %}
+
+    <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="my-3">
+      {% csrf_token %}
+      <div class="form-group">
+        <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+      </div>
+
+      <input type="submit" value="답변등록" class="btn btn-primary">
+      <button type="button" class="btn btn-primary" onclick="location.href='{% url 'pybo:index' %}'">목록보기
+      </button>
+
+    </form>
+  </div>
 {% endblock %}

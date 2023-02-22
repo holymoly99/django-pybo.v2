@@ -10,7 +10,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE) # 외래키 정의
-    content = models.TextField()
+    content = models.TextField('답변 내용')
     create_date = models.DateTimeField()
 
     def __str__(self):
