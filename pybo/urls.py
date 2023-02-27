@@ -30,6 +30,9 @@ path('answer/create/<int:question_id>/', views.answer_create, name='answer_creat
 path('answer/modify/<int:answer_id>/', views.answer_modify, name='answer_modify'),
 path('answer/delete/<int:answer_id>/', views.answer_delete, name='answer_delete'),
 
+path('comment/create/question/<int:question_id>/', views.comment_create_question, name='comment_create_question'),
+path('comment/modify/question/<int:comment_id>/', views.comment_modify_question, name='comment_modify_question'),
+path('comment/delete/question/<int:comment_id>/', views.comment_delete_question, name='comment_delete_question'),
 
 ]
 

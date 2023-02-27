@@ -14,3 +14,14 @@
     border-radius: 30%;
     margin-right: 10px;
 }
+
+.comment {
+    border-top: dotted 1px blue;
+    font-size: 0.7em;
+}
+
+@media(min-width:540px) {
+    .auth-form {
+        width:540px;
+    }
+}

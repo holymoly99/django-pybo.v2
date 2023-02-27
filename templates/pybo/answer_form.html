@@ -1,3 +1,4 @@
+<!-- detail에서 답변 작성 -->
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
@@ -6,7 +7,7 @@
         {% csrf_token %}
         <!-- 
         ## bootstrap_form이 에러 처리까지 해줌 ##
-        
+
         {% include "form_errors.html" %}
         <div class="form-group">
         <label for="content">답변내용</label>

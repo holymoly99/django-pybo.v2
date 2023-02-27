@@ -1,0 +1,12 @@
+    <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="my-3">
+      {% csrf_token %}
+      <div class="form-group">
+        <textarea {% if not user.is_authenticated %} disabled="disabled" {% endif %}
+        name="content" id="content" class="form-control" rows="3"></textarea>
+      </div>
+
+      <input type="submit" value="답변등록" class="btn btn-primary">
+      <button type="button" class="btn btn-primary" onclick="location.href='{% url 'pybo:index' %}'">목록보기
+      </button>
+
+    </form>
