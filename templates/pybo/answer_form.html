@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <!-- 
+        ## bootstrap_form이 에러 처리까지 해줌 ##
+        
+        {% include "form_errors.html" %}
+        <div class="form-group">
+        <label for="content">답변내용</label>
+        <textarea class="form-control" name="content" id="content"
+        rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+        </div>
+        -->
+        {% bootstrap_form form %} 
+
+        <button type="submit" class='btn btn-primary'>저장하기</button>
+    </form>
+{% endblock content %}

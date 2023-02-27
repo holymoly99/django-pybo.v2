@@ -1,2 +1,10 @@
-**/__pycache__  
-# 어느 폴더의 __pycache__든 제외하라
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+media
+#db.sqlite3
+#db.sqlite3-journal
+
+# 어느 폴더의 ~든 제외하라

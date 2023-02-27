@@ -17,10 +17,15 @@ from django.urls import path, include
 from pybo import views
 
 
+
 urlpatterns = [
     path('', views.index),
     path('<int:question_id>/', views.detail),
     path('pybo/', include('pybo.urls', namespace="pybo")),
+    path('common/', include('common.urls')),
+    path('', views.index, name='index'), # '/' 에 해당되는 path
+
+
 
     
 ]

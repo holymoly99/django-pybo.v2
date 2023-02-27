@@ -12,10 +12,10 @@ class QuestionForm(forms.ModelForm):
             'subject': '제목',
             'content': '내용',
         }
-        # widgets = {
-        #     'subject' : forms.TextInput(attrs={'class':'form-control'}),
-        #     'content' : forms.Textarea(attrs={'class':'form-contorl', 'row' : 10}),
-        # }
+        widgets = {
+             'subject' : forms.TextInput(attrs={'placeholder':'제목 입력해라'}),
+             'content' : forms.Textarea(attrs={'placeholder':'내용 입력해라'}),
+        }
 
 class AnswerForm(forms.ModelForm):
     class Meta:

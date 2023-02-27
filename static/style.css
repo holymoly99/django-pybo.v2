@@ -3,3 +3,14 @@
 * {
     font-family: 'Noto Sans KR', sans-serif;
 }
+
+.page-link{
+    border: 0px;
+}
+
+.avarta {
+    width: 30px;
+    height: 40px;
+    border-radius: 30%;
+    margin-right: 10px;
+}

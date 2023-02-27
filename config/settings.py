@@ -25,8 +25,10 @@ SECRET_KEY = "django-insecure-c0s2+o*l@i=g6pm0e_$&(*i-gd*%h9@t7#&67&0*zc2@ix==$t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ '27.1.74.14', '127.0.0.1', 'localhost']
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
 
@@ -37,7 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'pybo'
+    "common.apps.CommonConfig",
+    "bootstrap4",
+    'pybo',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +68,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+            
         },
     },
 ]
@@ -116,7 +121,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]

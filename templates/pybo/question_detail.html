@@ -3,9 +3,19 @@
 
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
-  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}"/>
 
   <div class="container my-3">
+    <!-- 사용자 오류 표시 -->
+    {% if messages %} 
+    <div class="alert alert-danger my-3" role="alert">
+      {% for message in messages %}
+        <strong>{{ message.tags }}</strong>
+        <ul><li>{{ message.message }}</li></ul>
+      {% endfor %}
+    </div>
+
+    {% endif %}
     <h2 class="border-bottom py-2">{{ question.subject}}</h2>
     {% csrf_token %}
     {% if form.errors %}
@@ -18,35 +28,70 @@
         {% endfor %}
       </div>
     {% endif %}
+
     <div class="card my-3">
-      <div class="card body">
-        <div class="card text" style="white-space: pre-line;">{{question.content}}</div>
+        <div class="card-body" style="white-space: pre-line;">{{question.content}}</div>
         <div class="d-flex justify-content-end">
-          <div class="badge badge-light p-2">
-            {{question.create_date}}
+
+          <!-- 글 수정 시 수정일 표시 -->
+          {% if question.modify_date %}
+          <div class="badge badge-light p-2 text-left mx-3">
+              <div class="mb-2">수정일</div>
+              <div>
+
+                {{ question.modify_date | date:'Y-m-d H:i' }}
+              </div>
+          </div>
+          {% endif %}
+
+          <div class="badge badge-success p-2 text-left">
+            <div class="mb-2">{{ question.author.username }}</div>
+            <div>{{question.create_date}}</div>
           </div>
         </div>
-      </div>
+        {% if request.user == question.author %}
+        <div class="card-footer">
+            <a href="{% url "pybo:question_modify" question.id %}" class="btn btn-sm btn-outline-secondary text-info">수정</a>
+            <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url "pybo:question_delete" question.id %}">삭제</a>
+        </div>
+        {% endif %}
     </div>
-
+    
+    
     <h5 class="border-bottom my-3 py-2">위 질문에 대한
       {{ question.answer_set.count }}개의 답변이 있습니다.</h5>
     {% for answer in question.answer_set.all %}
       <div class="card my-3">
         <div class="card-body" style="white-space: pre-line;">{{answer.content}}</div>
         <div class="d-flex justify-content-end">
-          <div class="badge badge-light p-2">
-            {{answer.create_date}}
+          <!-- 댓글 수정 시 수정일 표시 -->
+          {% if answer.modify_date %}
+          <div class="badge badge-light p-2 text-left mx-3">
+              <div class="mb-2">최근 수정일</div>
+              <div>
+                {{ answer.modify_date | date:'y-m-d H:i' }}
+              </div>
+          </div>
+          {% endif %}
+          <div class="badge badge-info p-2 text-left ">
+            <div class="mb-2">{{ answer.author.username }}</div>
+            <div>{{question.create_date}}</div>
           </div>
         </div>
+        {% if request.user == answer.author %}
+        <div class="card-footer py-2">
+          <a href="{% url 'pybo:answer_modify' answer.id %}" class="btn btn-sm btn-outline-secondary text-info">수정</a>
+          <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" text-danger data-uri="{% url 'pybo:answer_delete' answer.id %}">삭제</a>
+          </div>
+        {% endif %}
       </div>
-
     {% endfor %}
 
     <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="my-3">
       {% csrf_token %}
       <div class="form-group">
-        <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+        <textarea {% if not user.is_authenticated %} disabled="disabled" {% endif %}
+        name="content" id="content" class="form-control" rows="10"></textarea>
       </div>
 
       <input type="submit" value="답변등록" class="btn btn-primary">
@@ -55,4 +100,19 @@
 
     </form>
   </div>
+{% endblock content %}
+
+
+{% block script %}
+<script>
+$(document).ready(function(){
+
+    $(".delete").on('click', function() {
+      
+        if(confirm("정말로 삭제하시겠습니까?")) {
+          location.href = $(this).data('uri');
+        }
+    });
+});
+</script>
 {% endblock %}

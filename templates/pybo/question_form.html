@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+
 {% block content %}
   <div class="container">
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
     <form method="post" class="post-form my-3">
       {% csrf_token %}
+
+      {% bootstrap_form form %}
+
+      {% comment %} 
       {% if form.errors %}
         <div class="alert alert-danger" role="alert">
           {% for field in form %}
@@ -21,7 +27,8 @@
 
     <div class="form-group"><label <label for="content">내용</label>
     <textarea class="form-control" name="content" id="content" rows="10">{{form.content.value|default_if_none:''}}</textarea>
-  </div>
+  </div> 
+  {% endcomment %}
 
   <button type="submit" class="btn btn-primary" position='right'>
     저장하기
