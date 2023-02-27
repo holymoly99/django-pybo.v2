@@ -1,10 +1,11 @@
+**/__pycache__
+db.sqlite3
 *.log
 *.pot
 *.pyc
-__pycache__/
 local_settings.py
 media
-#db.sqlite3
-#db.sqlite3-journal
+
+
 
 # 어느 폴더의 ~든 제외하라
