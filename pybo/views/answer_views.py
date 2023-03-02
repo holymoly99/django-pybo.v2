@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from ..models import Question, Answer
 from django.utils import timezone
 from ..forms import QuestionForm, AnswerForm
@@ -18,7 +18,8 @@ def answer_create(request, question_id):
             answer.create_date = timezone.now()
             answer.question = question # Foreign Key
             answer.save()
-            return redirect('pybo:detail', question_id=question.id)
+            return redirect('{}#answer_{}'.format(resolve_url('pybo:detail', question_id=question.id), answer.id))
+
     else: # get 방식일 때
         form = QuestionForm()
     context = {'question':question, 'form':form}
@@ -42,7 +43,7 @@ def answer_modify(request, answer_id):
             answer.author = request.user
             answer.modify_date = timezone.now()
             answer.save()
-            return redirect('pybo:detail', question_id=answer.question.id)
+            return redirect('{}#answer_{}'.format(resolve_url('pybo:detail', question_id=answer.question.id), answer.id))
     else:
         form = AnswerForm(instance=answer)
             

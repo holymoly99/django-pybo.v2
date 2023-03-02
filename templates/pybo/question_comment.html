@@ -4,6 +4,7 @@
       {% if question.comment_set.count > 0 %}
       <div class="mt-3">
       {% for comment in question.comment_set.all %}
+        <a name="comment_{{ comment.id }}"></a>
         <div class="comment py-1 text-muted">
           <span style="white-space: pre-line;"><b>{{ comment.content }}</b></span>
           <span>
