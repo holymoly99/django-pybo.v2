@@ -13,19 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+from django.contrib import admin
 from django.urls import path, include
-from pybo import views
+from pybo.views import base_views
 
 
 
 urlpatterns = [
-    path('', views.index),
-    path('<int:question_id>/', views.detail),
+    path('<int:question_id>/', base_views.detail),
     path('pybo/', include('pybo.urls', namespace="pybo")),
     path('common/', include('common.urls')),
-    path('', views.index, name='index'), # '/' 에 해당되는 path
-
-
-
-    
+    path('admin/', admin.site.urls),
+    path('', base_views.index, name='index'), # '/' 에 해당되는 path
 ]
